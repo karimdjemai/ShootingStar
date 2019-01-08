@@ -29,13 +29,17 @@ class CSVImporter:
 
     # printing to console
 
-    # print(dfjson)
+    # print(df_json)
     # this can be used to prints out the head of the table
     # (can be used to check what the file looks like...)
-    print(df_json.head())
-    print("\n")
-    print(df_csv.head())
+    print(df_json.head(10))
+    print("\n \n \n \n")
 
+   # print(df_csv.head())
+   # print(df_csv)
+
+    with pandas.option_context('display.max_rows', 10, 'display.max_columns', 10):
+        print(df_csv)
 
 # return type should be tensor
 # return
