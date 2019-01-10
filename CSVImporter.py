@@ -1,45 +1,50 @@
-import tensorflow as tf
 import pandas
-import os
 import json
 
 
 class CSVImporter:
 
+    def __init__(self):
+        self.batches = []
 
-    def get_csv_as_tensor(self):
-        file_name = "8_seadoggs-vs-breakaway-dust2"
+    def read(self, file_name, batch_size):
+
         from pandas.io.json import json_normalize
 
         with open(file_name + ".json") as jsonFile:
             file = json.load(jsonFile)
 
-        csv_file = json_normalize(file["GameInfo"], meta=["id"], record_path="players", )
+        csv_file = json_normalize(file["GameInfo"], meta=["id"], record_path="players")
         csv_file.to_csv(file_name + ".csv")
 
-        # os.listdir()
-        # dfiles = os.listdir('C:/Users/Juliu/PycharmProjects/git_LSTM_GRU')
-        d_files = os.listdir()
+        df = pandas.read_csv(file_name + '.csv', usecols=[1,2,3,5,6,7,8,9])
 
-        for file in d_files:
-            print(file)
+        alldata = []
+        #can be optimized because it iterates over the code 10 times instead of just putting all the data to the right batch
+        #directly
+        for x in range(0, 10):
+            for i, r in df.iterrows():
+                if i%10 == x:
+                    alldata.append(r.values)
 
-    df_json = pandas.read_json("8_seadoggs-vs-breakaway-dust2.json")
-    df_csv = pandas.read_csv("8_seadoggs-vs-breakaway-dust2.csv")    #TODO: take in all (JSON/CSV )files ...
+            self.batches.append([])
 
-    # printing to console
+            for i in range(0, (len(alldata)//batch_size) -1):
+                self.batches[0].append(alldata[i*batch_size:i*batch_size+batch_size-1])
 
-    # print(df_json)
-    # this can be used to prints out the head of the table
-    # (can be used to check what the file looks like...)
-    print(df_json.head(10))
-    print("\n \n \n \n")
+            alldata = []
 
-   # print(df_csv.head())
-   # print(df_csv)
 
-    with pandas.option_context('display.max_rows', 10, 'display.max_columns', 10):
-        print(df_csv)
 
-# return type should be tensor
-# return
+
+
+
+
+
+
+
+        #print(csv_file)
+
+
+
+
