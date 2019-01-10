@@ -1,13 +1,11 @@
 import tensorflow as tf
 
-class Modelbuilder:
+class ModelBuilder:
 
-    def buildModel(self):
-
-
+    @staticmethod
+    def buildModel():
         model = tf.keras.Sequential([
-            tf.keras.layers.RNN(),
-            tf.keras.layers.dense()
+            tf.keras.layers.RNN()
         ])
 
         return model
