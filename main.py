@@ -1,11 +1,13 @@
 import tensorflow as tf
-import CSVImporter
-import Modelbuilder
+from CSVImporter import CSVImporter
+from Modelbuilder import ModelBuilder
 
 # initialize a tensor from the csv
-tensor = CSVImporter().getCSVasTensor()
+importer = CSVImporter()
+importer.read("8_seadoggs-vs-breakaway-dust2", 100)
 
 # build a rnn model
-model =
+model = ModelBuilder().buildModel()
+
 
 # train the model
