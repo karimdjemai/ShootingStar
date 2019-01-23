@@ -165,6 +165,8 @@ delta = pandas.DataFrame(index=(range(0,4000)), columns=['delta'])
 
 for index, row in valid.iterrows():
     delta['delta'][index] = abs(row['yaw'] - row['Predictions'])
+    if delta['delta'][index] > 180:
+        delta['delta'][index] = 360 - delta['delta'][index]
 
 
 plt.figure(figsize=(16,8))
